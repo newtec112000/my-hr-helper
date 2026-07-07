@@ -14,7 +14,207 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      employees: {
+        Row: {
+          address: string | null
+          age: number | null
+          allowance_food: number | null
+          allowance_production: number | null
+          allowance_regularity: number | null
+          allowance_transport: number | null
+          allowance_work_nature: number | null
+          annual_leave_balance: number | null
+          bank_account: string | null
+          birth_date: string | null
+          birth_governorate: string | null
+          birth_place: string | null
+          children_count: number | null
+          code: number
+          company: string | null
+          contract_end_date: string | null
+          contract_start_date: string | null
+          created_at: string
+          doc_birth_cert: string | null
+          doc_form_111: string | null
+          doc_id_copies: string | null
+          doc_military: string | null
+          doc_photos: string | null
+          doc_profession_license: string | null
+          doc_qualification: string | null
+          doc_skill_cert: string | null
+          employment_type: string | null
+          gender: string | null
+          graduation_year: number | null
+          hire_date: string | null
+          id: string
+          id_expiry_date: string | null
+          id_issue_date: string | null
+          id_place: string | null
+          id_type: string | null
+          insurance_end_date: string | null
+          insurance_number: string | null
+          insurance_office: string | null
+          insurance_start_date: string | null
+          insurance_wage: number | null
+          is_active: boolean | null
+          job_title: string | null
+          last_work_day: string | null
+          locker_number: string | null
+          marital_status: string | null
+          medical_insurance: string | null
+          military_status: string | null
+          mobile: string | null
+          name: string
+          name_en: string | null
+          national_id: string | null
+          nationality: string | null
+          notes: string | null
+          payment_type: string | null
+          qualification: string | null
+          religion: string | null
+          row_num: number | null
+          salary: number | null
+          service_years: number | null
+          shift: string | null
+          social_insurance_status: string | null
+          termination_reason: string | null
+          updated_at: string
+          work_stub_status: string | null
+        }
+        Insert: {
+          address?: string | null
+          age?: number | null
+          allowance_food?: number | null
+          allowance_production?: number | null
+          allowance_regularity?: number | null
+          allowance_transport?: number | null
+          allowance_work_nature?: number | null
+          annual_leave_balance?: number | null
+          bank_account?: string | null
+          birth_date?: string | null
+          birth_governorate?: string | null
+          birth_place?: string | null
+          children_count?: number | null
+          code: number
+          company?: string | null
+          contract_end_date?: string | null
+          contract_start_date?: string | null
+          created_at?: string
+          doc_birth_cert?: string | null
+          doc_form_111?: string | null
+          doc_id_copies?: string | null
+          doc_military?: string | null
+          doc_photos?: string | null
+          doc_profession_license?: string | null
+          doc_qualification?: string | null
+          doc_skill_cert?: string | null
+          employment_type?: string | null
+          gender?: string | null
+          graduation_year?: number | null
+          hire_date?: string | null
+          id?: string
+          id_expiry_date?: string | null
+          id_issue_date?: string | null
+          id_place?: string | null
+          id_type?: string | null
+          insurance_end_date?: string | null
+          insurance_number?: string | null
+          insurance_office?: string | null
+          insurance_start_date?: string | null
+          insurance_wage?: number | null
+          is_active?: boolean | null
+          job_title?: string | null
+          last_work_day?: string | null
+          locker_number?: string | null
+          marital_status?: string | null
+          medical_insurance?: string | null
+          military_status?: string | null
+          mobile?: string | null
+          name: string
+          name_en?: string | null
+          national_id?: string | null
+          nationality?: string | null
+          notes?: string | null
+          payment_type?: string | null
+          qualification?: string | null
+          religion?: string | null
+          row_num?: number | null
+          salary?: number | null
+          service_years?: number | null
+          shift?: string | null
+          social_insurance_status?: string | null
+          termination_reason?: string | null
+          updated_at?: string
+          work_stub_status?: string | null
+        }
+        Update: {
+          address?: string | null
+          age?: number | null
+          allowance_food?: number | null
+          allowance_production?: number | null
+          allowance_regularity?: number | null
+          allowance_transport?: number | null
+          allowance_work_nature?: number | null
+          annual_leave_balance?: number | null
+          bank_account?: string | null
+          birth_date?: string | null
+          birth_governorate?: string | null
+          birth_place?: string | null
+          children_count?: number | null
+          code?: number
+          company?: string | null
+          contract_end_date?: string | null
+          contract_start_date?: string | null
+          created_at?: string
+          doc_birth_cert?: string | null
+          doc_form_111?: string | null
+          doc_id_copies?: string | null
+          doc_military?: string | null
+          doc_photos?: string | null
+          doc_profession_license?: string | null
+          doc_qualification?: string | null
+          doc_skill_cert?: string | null
+          employment_type?: string | null
+          gender?: string | null
+          graduation_year?: number | null
+          hire_date?: string | null
+          id?: string
+          id_expiry_date?: string | null
+          id_issue_date?: string | null
+          id_place?: string | null
+          id_type?: string | null
+          insurance_end_date?: string | null
+          insurance_number?: string | null
+          insurance_office?: string | null
+          insurance_start_date?: string | null
+          insurance_wage?: number | null
+          is_active?: boolean | null
+          job_title?: string | null
+          last_work_day?: string | null
+          locker_number?: string | null
+          marital_status?: string | null
+          medical_insurance?: string | null
+          military_status?: string | null
+          mobile?: string | null
+          name?: string
+          name_en?: string | null
+          national_id?: string | null
+          nationality?: string | null
+          notes?: string | null
+          payment_type?: string | null
+          qualification?: string | null
+          religion?: string | null
+          row_num?: number | null
+          salary?: number | null
+          service_years?: number | null
+          shift?: string | null
+          social_insurance_status?: string | null
+          termination_reason?: string | null
+          updated_at?: string
+          work_stub_status?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
