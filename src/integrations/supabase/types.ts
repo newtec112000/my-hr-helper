@@ -14,6 +14,141 @@ export type Database = {
   }
   public: {
     Tables: {
+      advances: {
+        Row: {
+          advance_date: string
+          amount: number
+          created_at: string
+          employee_id: string
+          id: string
+          installments: number | null
+          monthly_deduction: number | null
+          notes: string | null
+          remaining: number | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          advance_date: string
+          amount?: number
+          created_at?: string
+          employee_id: string
+          id?: string
+          installments?: number | null
+          monthly_deduction?: number | null
+          notes?: string | null
+          remaining?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          advance_date?: string
+          amount?: number
+          created_at?: string
+          employee_id?: string
+          id?: string
+          installments?: number | null
+          monthly_deduction?: number | null
+          notes?: string | null
+          remaining?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "advances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      attendance: {
+        Row: {
+          created_at: string
+          employee_id: string
+          hours_worked: number | null
+          id: string
+          notes: string | null
+          overtime_hours: number | null
+          status: string
+          updated_at: string
+          work_date: string
+        }
+        Insert: {
+          created_at?: string
+          employee_id: string
+          hours_worked?: number | null
+          id?: string
+          notes?: string | null
+          overtime_hours?: number | null
+          status?: string
+          updated_at?: string
+          work_date: string
+        }
+        Update: {
+          created_at?: string
+          employee_id?: string
+          hours_worked?: number | null
+          id?: string
+          notes?: string | null
+          overtime_hours?: number | null
+          status?: string
+          updated_at?: string
+          work_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bonuses: {
+        Row: {
+          amount: number
+          bonus_date: string
+          bonus_type: string | null
+          created_at: string
+          employee_id: string
+          id: string
+          notes: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          bonus_date: string
+          bonus_type?: string | null
+          created_at?: string
+          employee_id: string
+          id?: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          bonus_date?: string
+          bonus_type?: string | null
+          created_at?: string
+          employee_id?: string
+          id?: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bonuses_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       employees: {
         Row: {
           address: string | null
@@ -214,6 +349,50 @@ export type Database = {
           work_stub_status?: string | null
         }
         Relationships: []
+      }
+      penalties: {
+        Row: {
+          amount: number
+          created_at: string
+          days: number | null
+          employee_id: string
+          id: string
+          notes: string | null
+          penalty_date: string
+          reason: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          days?: number | null
+          employee_id: string
+          id?: string
+          notes?: string | null
+          penalty_date: string
+          reason?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          days?: number | null
+          employee_id?: string
+          id?: string
+          notes?: string | null
+          penalty_date?: string
+          reason?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "penalties_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
