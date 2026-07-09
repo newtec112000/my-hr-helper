@@ -12,7 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnlockRouteImport } from './routes/unlock'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app.index'
+import { Route as AppPenaltiesRouteImport } from './routes/_app.penalties'
 import { Route as AppEmployeesRouteImport } from './routes/_app.employees'
+import { Route as AppBonusesRouteImport } from './routes/_app.bonuses'
+import { Route as AppAttendanceRouteImport } from './routes/_app.attendance'
+import { Route as AppAdvancesRouteImport } from './routes/_app.advances'
 
 const UnlockRoute = UnlockRouteImport.update({
   id: '/unlock',
@@ -28,35 +32,90 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppPenaltiesRoute = AppPenaltiesRouteImport.update({
+  id: '/penalties',
+  path: '/penalties',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppEmployeesRoute = AppEmployeesRouteImport.update({
   id: '/employees',
   path: '/employees',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBonusesRoute = AppBonusesRouteImport.update({
+  id: '/bonuses',
+  path: '/bonuses',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAttendanceRoute = AppAttendanceRouteImport.update({
+  id: '/attendance',
+  path: '/attendance',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdvancesRoute = AppAdvancesRouteImport.update({
+  id: '/advances',
+  path: '/advances',
   getParentRoute: () => AppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
   '/unlock': typeof UnlockRoute
+  '/advances': typeof AppAdvancesRoute
+  '/attendance': typeof AppAttendanceRoute
+  '/bonuses': typeof AppBonusesRoute
   '/employees': typeof AppEmployeesRoute
+  '/penalties': typeof AppPenaltiesRoute
 }
 export interface FileRoutesByTo {
   '/unlock': typeof UnlockRoute
+  '/advances': typeof AppAdvancesRoute
+  '/attendance': typeof AppAttendanceRoute
+  '/bonuses': typeof AppBonusesRoute
   '/employees': typeof AppEmployeesRoute
+  '/penalties': typeof AppPenaltiesRoute
   '/': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
   '/unlock': typeof UnlockRoute
+  '/_app/advances': typeof AppAdvancesRoute
+  '/_app/attendance': typeof AppAttendanceRoute
+  '/_app/bonuses': typeof AppBonusesRoute
   '/_app/employees': typeof AppEmployeesRoute
+  '/_app/penalties': typeof AppPenaltiesRoute
   '/_app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/unlock' | '/employees'
+  fullPaths:
+    | '/'
+    | '/unlock'
+    | '/advances'
+    | '/attendance'
+    | '/bonuses'
+    | '/employees'
+    | '/penalties'
   fileRoutesByTo: FileRoutesByTo
-  to: '/unlock' | '/employees' | '/'
-  id: '__root__' | '/_app' | '/unlock' | '/_app/employees' | '/_app/'
+  to:
+    | '/unlock'
+    | '/advances'
+    | '/attendance'
+    | '/bonuses'
+    | '/employees'
+    | '/penalties'
+    | '/'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/unlock'
+    | '/_app/advances'
+    | '/_app/attendance'
+    | '/_app/bonuses'
+    | '/_app/employees'
+    | '/_app/penalties'
+    | '/_app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -87,6 +146,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/penalties': {
+      id: '/_app/penalties'
+      path: '/penalties'
+      fullPath: '/penalties'
+      preLoaderRoute: typeof AppPenaltiesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/employees': {
       id: '/_app/employees'
       path: '/employees'
@@ -94,16 +160,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEmployeesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/bonuses': {
+      id: '/_app/bonuses'
+      path: '/bonuses'
+      fullPath: '/bonuses'
+      preLoaderRoute: typeof AppBonusesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/attendance': {
+      id: '/_app/attendance'
+      path: '/attendance'
+      fullPath: '/attendance'
+      preLoaderRoute: typeof AppAttendanceRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/advances': {
+      id: '/_app/advances'
+      path: '/advances'
+      fullPath: '/advances'
+      preLoaderRoute: typeof AppAdvancesRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppAdvancesRoute: typeof AppAdvancesRoute
+  AppAttendanceRoute: typeof AppAttendanceRoute
+  AppBonusesRoute: typeof AppBonusesRoute
   AppEmployeesRoute: typeof AppEmployeesRoute
+  AppPenaltiesRoute: typeof AppPenaltiesRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdvancesRoute: AppAdvancesRoute,
+  AppAttendanceRoute: AppAttendanceRoute,
+  AppBonusesRoute: AppBonusesRoute,
   AppEmployeesRoute: AppEmployeesRoute,
+  AppPenaltiesRoute: AppPenaltiesRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
@@ -116,13 +211,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

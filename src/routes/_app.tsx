@@ -12,7 +12,11 @@ export const Route = createFileRoute("/_app")({
 
 const NAV = [
   { to: "/", label: "لوحة التحكم" },
-  { to: "/employees", label: "الموظفون (القوة)" },
+  { to: "/employees", label: "الموظفون" },
+  { to: "/attendance", label: "الحضور" },
+  { to: "/penalties", label: "الجزاءات" },
+  { to: "/advances", label: "السلف" },
+  { to: "/bonuses", label: "المكافآت" },
 ];
 
 function AppLayout() {
