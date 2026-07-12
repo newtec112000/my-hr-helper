@@ -157,6 +157,7 @@ function PayrollPage() {
                   <td className="px-2 py-2 font-medium">{r.name}</td>
                   <td className="px-2 py-2 font-mono">{fmt(r.base_salary)}</td>
                   <td className="px-2 py-2 font-mono">{fmt(r.allowances_total)}</td>
+                  <td className="px-2 py-2 font-mono text-emerald-600">{fmt(r.incentives_total)}</td>
                   <td className="px-2 py-2 font-mono text-emerald-600">{fmt(r.bonuses_total)}</td>
                   <td className="px-2 py-2 font-mono">{r.absent_days}</td>
                   <td className="px-2 py-2 font-mono text-destructive">{fmt(r.absent_deduction)}</td>
