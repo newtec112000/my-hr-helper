@@ -58,6 +58,11 @@ function PayrollPage() {
       "بدل طبيعة": r.allowances_work_nature,
       "بدل غذاء": r.allowances_food,
       "إجمالي البدلات": r.allowances_total,
+      "حافز انتظام": r.incentive_regularity,
+      "حافز إنتاج (شهري)": r.incentive_production,
+      "حافز انتقال (شهري)": r.incentive_transport,
+      "بدل طبيعة عمل (شهري)": r.incentive_work_nature,
+      "إجمالي الحوافز": r.incentives_total,
       المكافآت: r.bonuses_total,
       "أيام الغياب": r.absent_days,
       "خصم الغياب": r.absent_deduction,
@@ -129,6 +134,7 @@ function PayrollPage() {
                 <th className="px-2 py-2 text-right font-medium">الاسم</th>
                 <th className="px-2 py-2 text-right font-medium">أساسي</th>
                 <th className="px-2 py-2 text-right font-medium">بدلات</th>
+                <th className="px-2 py-2 text-right font-medium">حوافز</th>
                 <th className="px-2 py-2 text-right font-medium">مكافآت</th>
                 <th className="px-2 py-2 text-right font-medium">غياب</th>
                 <th className="px-2 py-2 text-right font-medium">خصم غياب</th>
@@ -142,7 +148,7 @@ function PayrollPage() {
             <tbody>
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={12} className="text-center py-12 text-muted-foreground">لا يوجد بيانات.</td>
+                  <td colSpan={13} className="text-center py-12 text-muted-foreground">لا يوجد بيانات.</td>
                 </tr>
               )}
               {filtered.map((r: PayrollRow) => (
@@ -151,6 +157,7 @@ function PayrollPage() {
                   <td className="px-2 py-2 font-medium">{r.name}</td>
                   <td className="px-2 py-2 font-mono">{fmt(r.base_salary)}</td>
                   <td className="px-2 py-2 font-mono">{fmt(r.allowances_total)}</td>
+                  <td className="px-2 py-2 font-mono text-emerald-600">{fmt(r.incentives_total)}</td>
                   <td className="px-2 py-2 font-mono text-emerald-600">{fmt(r.bonuses_total)}</td>
                   <td className="px-2 py-2 font-mono">{r.absent_days}</td>
                   <td className="px-2 py-2 font-mono text-destructive">{fmt(r.absent_deduction)}</td>
@@ -165,7 +172,7 @@ function PayrollPage() {
             {filtered.length > 0 && (
               <tfoot className="bg-muted/30 font-bold">
                 <tr className="border-t-2 border-border">
-                  <td colSpan={9} className="px-2 py-2 text-left">الإجمالي</td>
+                  <td colSpan={10} className="px-2 py-2 text-left">الإجمالي</td>
                   <td className="px-2 py-2 font-mono">{fmt(totals.gross)}</td>
                   <td className="px-2 py-2 font-mono text-destructive">{fmt(totals.deductions)}</td>
                   <td className="px-2 py-2 font-mono text-primary">{fmt(totals.net)}</td>
