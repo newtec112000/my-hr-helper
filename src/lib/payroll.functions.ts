@@ -76,6 +76,18 @@ export const computePayroll = createServerFn({ method: "GET" })
       if (rec.status === "غائب") absMap.set(rec.employee_id, (absMap.get(rec.employee_id) ?? 0) + 1);
     }
 
+    const incByEmp = new Map<string, { regularity: number; production: number; transport: number; work_nature: number }>();
+    for (const r of (incRes.data ?? []) as Array<{ employee_id: string; amount: unknown; incentive_type: string }>) {
+      const cur = incByEmp.get(r.employee_id) ?? { regularity: 0, production: 0, transport: 0, work_nature: 0 };
+      const v = num(r.amount);
+      const t = (r.incentive_type ?? "").trim();
+      if (t === "انتظام") cur.regularity += v;
+      else if (t === "إنتاج" || t === "انتاج") cur.production += v;
+      else if (t === "انتقال") cur.transport += v;
+      else if (t === "بدل طبيعة عمل") cur.work_nature += v;
+      incByEmp.set(r.employee_id, cur);
+    }
+
     const out: PayrollRow[] = [];
     for (const e of empRes.data ?? []) {
       const emp = e as never as Record<string, unknown> & { id: string; code: number; name: string };
@@ -86,13 +98,15 @@ export const computePayroll = createServerFn({ method: "GET" })
       const a4 = num(emp.allowance_work_nature);
       const a5 = num(emp.allowance_food);
       const allowances = a1 + a2 + a3 + a4 + a5;
+      const inc = incByEmp.get(emp.id) ?? { regularity: 0, production: 0, transport: 0, work_nature: 0 };
+      const incTotal = inc.regularity + inc.production + inc.transport + inc.work_nature;
       const bonuses = bonMap.get(emp.id) ?? 0;
       const penalties = penMap.get(emp.id) ?? 0;
       const adv = advMap.get(emp.id) ?? 0;
       const absentDays = absMap.get(emp.id) ?? 0;
       const daily = base > 0 && workDays > 0 ? base / workDays : 0;
       const absentDed = daily * absentDays;
-      const gross = base + allowances + bonuses;
+      const gross = base + allowances + incTotal + bonuses;
       const deductions = penalties + adv + absentDed;
       out.push({
         employee_id: emp.id,
@@ -107,12 +121,17 @@ export const computePayroll = createServerFn({ method: "GET" })
         allowances_work_nature: a4,
         allowances_food: a5,
         allowances_total: allowances,
+        incentive_regularity: inc.regularity,
+        incentive_production: inc.production,
+        incentive_transport: inc.transport,
+        incentive_work_nature: inc.work_nature,
+        incentives_total: incTotal,
         bonuses_total: bonuses,
         penalties_total: penalties,
         advance_deduction: adv,
         absent_days: absentDays,
         absent_deduction: Math.round(absentDed * 100) / 100,
-        gross,
+        gross: Math.round(gross * 100) / 100,
         total_deductions: Math.round(deductions * 100) / 100,
         net: Math.round((gross - deductions) * 100) / 100,
       });
