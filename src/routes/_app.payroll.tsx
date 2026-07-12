@@ -134,6 +134,7 @@ function PayrollPage() {
                 <th className="px-2 py-2 text-right font-medium">الاسم</th>
                 <th className="px-2 py-2 text-right font-medium">أساسي</th>
                 <th className="px-2 py-2 text-right font-medium">بدلات</th>
+                <th className="px-2 py-2 text-right font-medium">حوافز</th>
                 <th className="px-2 py-2 text-right font-medium">مكافآت</th>
                 <th className="px-2 py-2 text-right font-medium">غياب</th>
                 <th className="px-2 py-2 text-right font-medium">خصم غياب</th>
