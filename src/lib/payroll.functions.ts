@@ -46,12 +46,13 @@ export const computePayroll = createServerFn({ method: "GET" })
     const to = new Date(y, m, 0).toISOString().slice(0, 10);
     const workDays = new Date(y, m, 0).getDate();
 
-    const [empRes, attRes, penRes, advRes, bonRes] = await Promise.all([
+    const [empRes, attRes, penRes, advRes, bonRes, incRes] = await Promise.all([
       sb.from("employees").select("*").order("code"),
       sb.from("attendance").select("employee_id,status,work_date").gte("work_date", from).lte("work_date", to),
       sb.from("penalties").select("employee_id,amount,penalty_date").gte("penalty_date", from).lte("penalty_date", to),
       sb.from("advances").select("employee_id,monthly_deduction,status"),
       sb.from("bonuses").select("employee_id,amount,bonus_date").gte("bonus_date", from).lte("bonus_date", to),
+      sb.from("incentives" as never).select("employee_id,amount,incentive_type,incentive_date").gte("incentive_date", from).lte("incentive_date", to),
     ]);
     if (empRes.error) throw new Error(empRes.error.message);
 
