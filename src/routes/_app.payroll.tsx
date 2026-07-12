@@ -148,7 +148,7 @@ function PayrollPage() {
             <tbody>
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={12} className="text-center py-12 text-muted-foreground">لا يوجد بيانات.</td>
+                  <td colSpan={13} className="text-center py-12 text-muted-foreground">لا يوجد بيانات.</td>
                 </tr>
               )}
               {filtered.map((r: PayrollRow) => (
