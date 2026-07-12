@@ -20,6 +20,11 @@ export type PayrollRow = {
   allowances_work_nature: number;
   allowances_food: number;
   allowances_total: number;
+  incentive_regularity: number;
+  incentive_production: number;
+  incentive_transport: number;
+  incentive_work_nature: number;
+  incentives_total: number;
   bonuses_total: number;
   penalties_total: number;
   advance_deduction: number;
