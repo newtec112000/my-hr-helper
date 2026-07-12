@@ -172,7 +172,7 @@ function PayrollPage() {
             {filtered.length > 0 && (
               <tfoot className="bg-muted/30 font-bold">
                 <tr className="border-t-2 border-border">
-                  <td colSpan={9} className="px-2 py-2 text-left">الإجمالي</td>
+                  <td colSpan={10} className="px-2 py-2 text-left">الإجمالي</td>
                   <td className="px-2 py-2 font-mono">{fmt(totals.gross)}</td>
                   <td className="px-2 py-2 font-mono text-destructive">{fmt(totals.deductions)}</td>
                   <td className="px-2 py-2 font-mono text-primary">{fmt(totals.net)}</td>
