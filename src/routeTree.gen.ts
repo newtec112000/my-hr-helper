@@ -14,6 +14,7 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app.index'
 import { Route as AppPenaltiesRouteImport } from './routes/_app.penalties'
 import { Route as AppPayrollRouteImport } from './routes/_app.payroll'
+import { Route as AppIncentivesRouteImport } from './routes/_app.incentives'
 import { Route as AppEmployeesRouteImport } from './routes/_app.employees'
 import { Route as AppBonusesRouteImport } from './routes/_app.bonuses'
 import { Route as AppAttendanceRouteImport } from './routes/_app.attendance'
@@ -41,6 +42,11 @@ const AppPenaltiesRoute = AppPenaltiesRouteImport.update({
 const AppPayrollRoute = AppPayrollRouteImport.update({
   id: '/payroll',
   path: '/payroll',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppIncentivesRoute = AppIncentivesRouteImport.update({
+  id: '/incentives',
+  path: '/incentives',
   getParentRoute: () => AppRoute,
 } as any)
 const AppEmployeesRoute = AppEmployeesRouteImport.update({
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/attendance': typeof AppAttendanceRoute
   '/bonuses': typeof AppBonusesRoute
   '/employees': typeof AppEmployeesRoute
+  '/incentives': typeof AppIncentivesRoute
   '/payroll': typeof AppPayrollRoute
   '/penalties': typeof AppPenaltiesRoute
 }
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/attendance': typeof AppAttendanceRoute
   '/bonuses': typeof AppBonusesRoute
   '/employees': typeof AppEmployeesRoute
+  '/incentives': typeof AppIncentivesRoute
   '/payroll': typeof AppPayrollRoute
   '/penalties': typeof AppPenaltiesRoute
   '/': typeof AppIndexRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/_app/attendance': typeof AppAttendanceRoute
   '/_app/bonuses': typeof AppBonusesRoute
   '/_app/employees': typeof AppEmployeesRoute
+  '/_app/incentives': typeof AppIncentivesRoute
   '/_app/payroll': typeof AppPayrollRoute
   '/_app/penalties': typeof AppPenaltiesRoute
   '/_app/': typeof AppIndexRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/attendance'
     | '/bonuses'
     | '/employees'
+    | '/incentives'
     | '/payroll'
     | '/penalties'
   fileRoutesByTo: FileRoutesByTo
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
     | '/attendance'
     | '/bonuses'
     | '/employees'
+    | '/incentives'
     | '/payroll'
     | '/penalties'
     | '/'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
     | '/_app/attendance'
     | '/_app/bonuses'
     | '/_app/employees'
+    | '/_app/incentives'
     | '/_app/payroll'
     | '/_app/penalties'
     | '/_app/'
@@ -172,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPayrollRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/incentives': {
+      id: '/_app/incentives'
+      path: '/incentives'
+      fullPath: '/incentives'
+      preLoaderRoute: typeof AppIncentivesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/employees': {
       id: '/_app/employees'
       path: '/employees'
@@ -208,6 +227,7 @@ interface AppRouteChildren {
   AppAttendanceRoute: typeof AppAttendanceRoute
   AppBonusesRoute: typeof AppBonusesRoute
   AppEmployeesRoute: typeof AppEmployeesRoute
+  AppIncentivesRoute: typeof AppIncentivesRoute
   AppPayrollRoute: typeof AppPayrollRoute
   AppPenaltiesRoute: typeof AppPenaltiesRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -218,6 +238,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAttendanceRoute: AppAttendanceRoute,
   AppBonusesRoute: AppBonusesRoute,
   AppEmployeesRoute: AppEmployeesRoute,
+  AppIncentivesRoute: AppIncentivesRoute,
   AppPayrollRoute: AppPayrollRoute,
   AppPenaltiesRoute: AppPenaltiesRoute,
   AppIndexRoute: AppIndexRoute,
