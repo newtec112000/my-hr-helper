@@ -350,6 +350,47 @@ export type Database = {
         }
         Relationships: []
       }
+      incentives: {
+        Row: {
+          amount: number
+          created_at: string
+          employee_id: string
+          id: string
+          incentive_date: string
+          incentive_type: string
+          notes: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          employee_id: string
+          id?: string
+          incentive_date: string
+          incentive_type: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          employee_id?: string
+          id?: string
+          incentive_date?: string
+          incentive_type?: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "incentives_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       penalties: {
         Row: {
           amount: number
