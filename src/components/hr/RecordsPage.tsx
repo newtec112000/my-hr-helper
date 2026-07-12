@@ -12,7 +12,7 @@ export type FieldDef = {
 };
 
 export type RecordsPageConfig = {
-  table: "attendance" | "penalties" | "advances" | "bonuses";
+  table: "attendance" | "penalties" | "advances" | "bonuses" | "incentives";
   title: string;
   dateKey: string;
   fields: FieldDef[];
