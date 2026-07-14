@@ -139,11 +139,11 @@ export const computePayroll = createServerFn({ method: "GET" })
     }
 
     // ---- insurance: pick latest record per employee up to end of month ----
-    type InsRec = { basis: number; rate: number; amount: number | null };
+    type InsRec = { basis: number; rate: number; amount: number | null; date: string };
     const insMap = new Map<string, InsRec>();
     for (const r of (insRes.data ?? []) as Array<{ employee_id: string; basis: unknown; rate: unknown; amount: unknown; insurance_date: string }>) {
-      if (insMap.has(r.employee_id)) continue; // ordered desc: first is latest
-      insMap.set(r.employee_id, { basis: num(r.basis), rate: num(r.rate), amount: r.amount == null ? null : num(r.amount) });
+      if (insMap.has(r.employee_id)) continue;
+      insMap.set(r.employee_id, { basis: num(r.basis), rate: num(r.rate), amount: r.amount == null ? null : num(r.amount), date: r.insurance_date });
     }
 
     const out: PayrollRow[] = [];
