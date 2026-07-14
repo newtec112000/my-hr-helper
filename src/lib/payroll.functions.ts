@@ -42,6 +42,9 @@ export type PayrollRow = {
   monthly_advance: number;
   phased_advance: number;
   insurance_deduction: number;
+  insurance_rate: number;
+  insurance_source_date: string | null;
+  insurance_source: "record" | "employee";
   total_deductions: number;
   net: number;
   notes: string | null;
