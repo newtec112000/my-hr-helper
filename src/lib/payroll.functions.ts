@@ -42,6 +42,9 @@ export type PayrollRow = {
   monthly_advance: number;
   phased_advance: number;
   insurance_deduction: number;
+  insurance_rate: number;
+  insurance_source_date: string | null;
+  insurance_source: "record" | "employee";
   total_deductions: number;
   net: number;
   notes: string | null;
@@ -136,11 +139,11 @@ export const computePayroll = createServerFn({ method: "GET" })
     }
 
     // ---- insurance: pick latest record per employee up to end of month ----
-    type InsRec = { basis: number; rate: number; amount: number | null };
+    type InsRec = { basis: number; rate: number; amount: number | null; date: string };
     const insMap = new Map<string, InsRec>();
     for (const r of (insRes.data ?? []) as Array<{ employee_id: string; basis: unknown; rate: unknown; amount: unknown; insurance_date: string }>) {
-      if (insMap.has(r.employee_id)) continue; // ordered desc: first is latest
-      insMap.set(r.employee_id, { basis: num(r.basis), rate: num(r.rate), amount: r.amount == null ? null : num(r.amount) });
+      if (insMap.has(r.employee_id)) continue;
+      insMap.set(r.employee_id, { basis: num(r.basis), rate: num(r.rate), amount: r.amount == null ? null : num(r.amount), date: r.insurance_date });
     }
 
     const out: PayrollRow[] = [];
@@ -210,6 +213,9 @@ export const computePayroll = createServerFn({ method: "GET" })
         monthly_advance: r2(adv.monthly),
         phased_advance: r2(adv.phased),
         insurance_deduction: insDed,
+        insurance_rate: effectiveRate,
+        insurance_source_date: insRec?.date ?? null,
+        insurance_source: insRec ? "record" : "employee",
         total_deductions: r2(totalDed),
         net: r2(net),
         notes: (emp.notes as string) ?? null,

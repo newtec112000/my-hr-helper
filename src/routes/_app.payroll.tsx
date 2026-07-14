@@ -90,6 +90,8 @@ const COLUMNS: ColDef[] = [
   { key: "monthly_advance", label: "سلف شهرية", kind: "money", section: "deduct", get: (r) => r.monthly_advance },
   { key: "phased_advance", label: "أقساط سلف مرحلة", kind: "money", section: "deduct", get: (r) => r.phased_advance },
   { key: "insurance_deduction", label: "ح تامينات الموظف", kind: "money", section: "deduct", get: (r) => r.insurance_deduction },
+  { key: "insurance_rate", label: "نسبة التأمين", kind: "text", section: "deduct", get: (r) => `${(Number(r.insurance_rate ?? 0) * 100).toFixed(2)}%` },
+  { key: "insurance_source_date", label: "تاريخ سجل التأمين", kind: "text", section: "deduct", get: (r) => r.insurance_source_date ?? (r.insurance_source === "employee" ? "من بيانات الموظف" : "—") },
   { key: "total_deductions", label: "اجمالى الاستقطاعات", kind: "money", section: "sum-deduct", get: (r) => r.total_deductions },
 
   { key: "net", label: "صافى الراتب", kind: "money", section: "net", get: (r) => r.net },
