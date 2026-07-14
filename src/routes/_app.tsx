@@ -18,6 +18,7 @@ const NAV = [
   { to: "/advances", label: "السلف" },
   { to: "/bonuses", label: "المكافآت" },
   { to: "/incentives", label: "الحوافز" },
+  { to: "/insurance", label: "التأمينات" },
   { to: "/payroll", label: "الرواتب" },
 ];
 
