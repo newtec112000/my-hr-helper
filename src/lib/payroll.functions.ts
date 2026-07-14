@@ -135,6 +135,14 @@ export const computePayroll = createServerFn({ method: "GET" })
       else if (t === "بدل طبيعة عمل") c.work_nature += v;
     }
 
+    // ---- insurance: pick latest record per employee up to end of month ----
+    type InsRec = { basis: number; rate: number; amount: number | null };
+    const insMap = new Map<string, InsRec>();
+    for (const r of (insRes.data ?? []) as Array<{ employee_id: string; basis: unknown; rate: unknown; amount: unknown; insurance_date: string }>) {
+      if (insMap.has(r.employee_id)) continue; // ordered desc: first is latest
+      insMap.set(r.employee_id, { basis: num(r.basis), rate: num(r.rate), amount: r.amount == null ? null : num(r.amount) });
+    }
+
     const out: PayrollRow[] = [];
     for (const e of empRes.data ?? []) {
       const emp = e as never as Record<string, unknown> & { id: string; code: number; name: string };
