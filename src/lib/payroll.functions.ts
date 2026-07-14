@@ -168,7 +168,12 @@ export const computePayroll = createServerFn({ method: "GET" })
       const adminVal = p.adminValue || daily * d.admin;
 
       const adv = advMap.get(emp.id) ?? { monthly: 0, phased: 0 };
-      const insDed = r2(insWage * 0.11);
+      const insRec = insMap.get(emp.id);
+      const effectiveInsWage = insRec?.basis || insWage;
+      const effectiveRate = insRec?.rate ?? 0.11;
+      const insDed = insRec?.amount != null
+        ? r2(insRec.amount)
+        : r2(effectiveInsWage * effectiveRate);
 
       const totalDed = excusedVal + unexcusedVal + penVal + adminVal + adv.monthly + adv.phased + insDed;
       const net = gross - totalDed;
