@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-type TableName = "attendance" | "penalties" | "advances" | "bonuses" | "incentives";
+type TableName = "attendance" | "penalties" | "advances" | "bonuses" | "incentives" | "insurance";
 
 async function admin() {
   const { assertUnlocked } = await import("./gate.functions");
@@ -54,7 +54,8 @@ export const listRows = createServerFn({ method: "GET" })
       data.table === "penalties" ? "penalty_date" :
       data.table === "advances" ? "advance_date" :
       data.table === "bonuses" ? "bonus_date" :
-      data.table === "incentives" ? "incentive_date" : "work_date";
+      data.table === "incentives" ? "incentive_date" :
+      data.table === "insurance" ? "insurance_date" : "work_date";
     let q = sb.from(data.table).select("*, employees(code,name)").order(dateCol, { ascending: false });
     if (data.from) q = q.gte(dateCol, data.from);
     if (data.to) q = q.lte(dateCol, data.to);

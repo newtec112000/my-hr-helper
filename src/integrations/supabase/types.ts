@@ -391,6 +391,50 @@ export type Database = {
           },
         ]
       }
+      insurance: {
+        Row: {
+          amount: number | null
+          basis: number
+          created_at: string
+          employee_id: string
+          id: string
+          insurance_date: string
+          notes: string | null
+          rate: number
+          updated_at: string
+        }
+        Insert: {
+          amount?: number | null
+          basis?: number
+          created_at?: string
+          employee_id: string
+          id?: string
+          insurance_date: string
+          notes?: string | null
+          rate?: number
+          updated_at?: string
+        }
+        Update: {
+          amount?: number | null
+          basis?: number
+          created_at?: string
+          employee_id?: string
+          id?: string
+          insurance_date?: string
+          notes?: string | null
+          rate?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "insurance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       penalties: {
         Row: {
           amount: number

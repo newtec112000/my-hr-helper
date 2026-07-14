@@ -58,12 +58,13 @@ export const computePayroll = createServerFn({ method: "GET" })
     const from = `${data.month}-01`;
     const to = new Date(y, m, 0).toISOString().slice(0, 10);
 
-    const [empRes, attRes, penRes, advRes, incRes] = await Promise.all([
+    const [empRes, attRes, penRes, advRes, incRes, insRes] = await Promise.all([
       sb.from("employees").select("*").order("code"),
       sb.from("attendance").select("employee_id,status,work_date").gte("work_date", from).lte("work_date", to),
       sb.from("penalties").select("employee_id,amount,days,reason,penalty_date").gte("penalty_date", from).lte("penalty_date", to),
       sb.from("advances").select("employee_id,amount,monthly_deduction,installments,status,advance_date"),
       sb.from("incentives" as never).select("employee_id,amount,incentive_type,incentive_date").gte("incentive_date", from).lte("incentive_date", to),
+      sb.from("insurance" as never).select("employee_id,basis,rate,amount,insurance_date").lte("insurance_date", to).order("insurance_date", { ascending: false }),
     ]);
     if (empRes.error) throw new Error(empRes.error.message);
 
@@ -134,6 +135,14 @@ export const computePayroll = createServerFn({ method: "GET" })
       else if (t === "بدل طبيعة عمل") c.work_nature += v;
     }
 
+    // ---- insurance: pick latest record per employee up to end of month ----
+    type InsRec = { basis: number; rate: number; amount: number | null };
+    const insMap = new Map<string, InsRec>();
+    for (const r of (insRes.data ?? []) as Array<{ employee_id: string; basis: unknown; rate: unknown; amount: unknown; insurance_date: string }>) {
+      if (insMap.has(r.employee_id)) continue; // ordered desc: first is latest
+      insMap.set(r.employee_id, { basis: num(r.basis), rate: num(r.rate), amount: r.amount == null ? null : num(r.amount) });
+    }
+
     const out: PayrollRow[] = [];
     for (const e of empRes.data ?? []) {
       const emp = e as never as Record<string, unknown> & { id: string; code: number; name: string };
@@ -159,7 +168,12 @@ export const computePayroll = createServerFn({ method: "GET" })
       const adminVal = p.adminValue || daily * d.admin;
 
       const adv = advMap.get(emp.id) ?? { monthly: 0, phased: 0 };
-      const insDed = r2(insWage * 0.11);
+      const insRec = insMap.get(emp.id);
+      const effectiveInsWage = insRec?.basis || insWage;
+      const effectiveRate = insRec?.rate ?? 0.11;
+      const insDed = insRec?.amount != null
+        ? r2(insRec.amount)
+        : r2(effectiveInsWage * effectiveRate);
 
       const totalDed = excusedVal + unexcusedVal + penVal + adminVal + adv.monthly + adv.phased + insDed;
       const net = gross - totalDed;
@@ -175,7 +189,7 @@ export const computePayroll = createServerFn({ method: "GET" })
         last_work_day: (emp.last_work_day as string) ?? null,
         employment_type: (emp.employment_type as string) ?? null,
         payment_type: (emp.payment_type as string) ?? null,
-        insurance_wage: insWage,
+        insurance_wage: effectiveInsWage,
         base_salary: base,
         daily_wage: r2(daily),
         incentive_regularity: inc.regularity,
