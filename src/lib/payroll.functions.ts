@@ -189,7 +189,7 @@ export const computePayroll = createServerFn({ method: "GET" })
         last_work_day: (emp.last_work_day as string) ?? null,
         employment_type: (emp.employment_type as string) ?? null,
         payment_type: (emp.payment_type as string) ?? null,
-        insurance_wage: insWage,
+        insurance_wage: effectiveInsWage,
         base_salary: base,
         daily_wage: r2(daily),
         incentive_regularity: inc.regularity,
