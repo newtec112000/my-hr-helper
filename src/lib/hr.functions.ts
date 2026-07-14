@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-type TableName = "attendance" | "penalties" | "advances" | "bonuses" | "incentives";
+type TableName = "attendance" | "penalties" | "advances" | "bonuses" | "incentives" | "insurance";
 
 async function admin() {
   const { assertUnlocked } = await import("./gate.functions");
